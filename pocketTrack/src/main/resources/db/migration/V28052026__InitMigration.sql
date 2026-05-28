@@ -10,11 +10,10 @@ CREATE TABLE cuenta
 
 CREATE TABLE gastos
 (
-    id         BIGINT AUTO_INCREMENT NOT NULL,
-    nombre     VARCHAR(255) NOT NULL,
+    id        BIGINT AUTO_INCREMENT NOT NULL,
+    nombre    VARCHAR(255) NOT NULL,
     cantidad DOUBLE NOT NULL,
-    tipo_gasto VARCHAR(255) NOT NULL,
-    cuenta_id  BIGINT NULL,
+    cuenta_id BIGINT NULL,
     CONSTRAINT pk_gastos PRIMARY KEY (id)
 );
 
@@ -40,6 +39,12 @@ CREATE TABLE usuario
     email         VARCHAR(255) NOT NULL,
     CONSTRAINT pk_usuario PRIMARY KEY (id)
 );
+
+ALTER TABLE usuario
+    ADD CONSTRAINT uc_usuario_email UNIQUE (email);
+
+ALTER TABLE usuario
+    ADD CONSTRAINT uc_usuario_username UNIQUE (username);
 
 ALTER TABLE cuenta
     ADD CONSTRAINT FK_CUENTA_ON_USUARIO FOREIGN KEY (usuario_id) REFERENCES usuario (id);

@@ -19,4 +19,7 @@ public interface IUsuarioRepository extends CrudRepository<Usuario,Long> {
 
     boolean existsByUsername(String username);
 
+
+    @Query("select u.id from Usuario u where u.username =:nombre")
+    Long findIdByUsername(@Param("nombre") String nombre);
 }

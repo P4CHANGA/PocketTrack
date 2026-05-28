@@ -98,8 +98,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
                                 .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/pocket/obtenerGastos/**").hasAnyRole(RoleType.ADMIN.name())
-                                .requestMatchers(HttpMethod.GET, "/api/pocket/obtenerGastos/**").hasAnyRole(RoleType.USER.name())
+                                .requestMatchers(HttpMethod.GET, "/api/pocket/**").hasAnyRole(RoleType.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/pocket/**").hasAnyRole(RoleType.USER.name())
+                                .requestMatchers(HttpMethod.GET,  "/api/pocket/obtenerGastos/{idCuenta}").hasAnyRole(RoleType.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET,"/api/pocket/obtenerIdUsuarioPorUsername/").hasAnyRole(RoleType.USER.name())
+                                .requestMatchers(HttpMethod.GET,"/api/pocket/obtenerIdUsuarioPorUsername/").hasAnyRole(RoleType.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/pocket/crearCuenta/**").hasAnyRole(RoleType.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST,"/api/pocket/crearGasto/**").hasAnyRole(RoleType.ADMIN.name())
                                 .requestMatchers(HttpMethod.DELETE, "/api/pocket/**").hasAnyRole(RoleType.ADMIN.name())

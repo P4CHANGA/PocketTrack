@@ -1,10 +1,11 @@
 package com.backend.pocketTrack.controller;
 
-import com.backend.pocketTrack.dto.cuenta.CreateCuentaDTO;
+import com.backend.pocketTrack.dto.cuenta.CuentaDetalleDTO;
 import com.backend.pocketTrack.dto.cuenta.CuentaDto;
 import com.backend.pocketTrack.dto.gastos.GastoDTO;
+import com.backend.pocketTrack.entity.Gastos;
 import com.backend.pocketTrack.enums.Moneda;
-import com.backend.pocketTrack.enums.TipoGasto;
+import com.backend.pocketTrack.repository.IGastosRepository;
 import com.backend.pocketTrack.service.Cuenta.ICuentaService;
 import com.backend.pocketTrack.service.Gastos.IGastosService;
 import com.backend.pocketTrack.service.Usuario.IUsuarioService;
@@ -13,6 +14,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
@@ -20,22 +23,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "PocketTrack Controlador", description = "Gestión de la app")
 public class PocketController {
     private final Logger logger = LoggerFactory.getLogger(PocketController.class);
     private final ICuentaService cuentaService;
     private final IGastosService gastosService;
     private final IUsuarioService usuarioService;
+    private final IGastosRepository igastosRepository;
 
     @Operation(summary = "Crear una Cuenta")
     @ApiResponses(value = {
@@ -54,9 +59,9 @@ public class PocketController {
     }
 
     @PostMapping("/pocket/crearGasto/{nombre}/{cantidad}/{tipoGasto}/{cuentaId}")
-    public ResponseEntity<GastoDTO> crearGasto(@PathVariable String nombre, @PathVariable Double cantidad,@PathVariable TipoGasto tipoGasto, @PathVariable Long cuentaId) {
+    public ResponseEntity<GastoDTO> crearGasto(@PathVariable String nombre, @PathVariable Double cantidad, @PathVariable Long cuentaId) {
         GastoDTO gastoDTO = null;
-            gastoDTO = gastosService.crearGastos(nombre, cantidad, tipoGasto, cuentaId);
+            gastoDTO = gastosService.crearGastos(nombre, cantidad, cuentaId);
             logger.info("Gasto creada");
             return ResponseEntity.ok(gastoDTO);
     }
@@ -97,10 +102,32 @@ public class PocketController {
     }
 
     @GetMapping("/pocket/obtenerGastos/{idCuenta}")
-    public ResponseEntity<GastoDTO> obtenerGastos(@PathVariable Long idCuenta){
-        GastoDTO gastoDTO = (GastoDTO) gastosService.obtenerGastosPorCenta(idCuenta);
+    public ResponseEntity<List<GastoDTO>> obtenerGastos(@PathVariable Long idCuenta){
 
-        return ResponseEntity.ok(gastoDTO);
+        List<GastoDTO> gastos = gastosService.obtenerGastosPorCuenta(idCuenta);
+
+        return ResponseEntity.ok(gastos);
+    }
+
+    @GetMapping("/pocket/obtenerIdUsuarioPorUsername/{username}")
+    public ResponseEntity<Long> obtenerIdUsuarioPorUsername(@PathVariable String username){
+        Long idUsuario = usuarioService.findIdByUsername(username);
+        logger.info("Usuario encontrado con id " + idUsuario);
+        return ResponseEntity.ok(idUsuario);
+    }
+
+    @GetMapping("/pocket/obtenerIdCuentaPorNombre/{nombre}")
+    public ResponseEntity<Long> obtenerIdCuentaPorNombre(@PathVariable String nombre){
+        Long idCuenta = cuentaService.findIdByNombre(nombre);
+        logger.info("Cuenta encontrada con id " + idCuenta);
+        return ResponseEntity.ok(idCuenta);
+    }
+
+    @GetMapping("/pocket/obtenerCuentas/{idUsuario}")
+    public ResponseEntity<List<CuentaDetalleDTO>> obtenerCuentas(@PathVariable Long idUsuario){
+        List<CuentaDetalleDTO> cuentass = cuentaService.findByUsuarioId(idUsuario);
+
+        return ResponseEntity.ok(cuentass);
     }
 }
 

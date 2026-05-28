@@ -1,11 +1,13 @@
 package com.backend.pocketTrack.service.Cuenta;
 
 import com.backend.pocketTrack.dto.cuenta.CreateCuentaDTO;
+import com.backend.pocketTrack.dto.cuenta.CuentaDetalleDTO;
 import com.backend.pocketTrack.dto.cuenta.CuentaDto;
 import com.backend.pocketTrack.entity.Cuenta;
 import com.backend.pocketTrack.entity.Usuario;
 import com.backend.pocketTrack.enums.Moneda;
 import com.backend.pocketTrack.exceptions.ErrorGenericoException;
+import com.backend.pocketTrack.exceptions.NotFoundEntityException;
 import com.backend.pocketTrack.mappers.CuentaMapper;
 import com.backend.pocketTrack.repository.ICuentaRepository;
 import com.backend.pocketTrack.repository.IGastosRepository;
@@ -72,5 +74,22 @@ public class CuentaService implements ICuentaService {
     public void eliminarCuentasYGastos(Long usuarioId) {
         gastosRepository.eliminarporUsuarioId(usuarioId);
         cuentaRepository.eliminarPorUsuarioId(usuarioId);
+    }
+
+    @Override
+    public Long findIdByNombre(String nombre) {
+        Long id = cuentaRepository.findIdByNombre(nombre);
+
+        if (id == null) {
+            throw new NotFoundEntityException("Cuenta con nombre: " + nombre + " no encontrado");
+        }
+        return id;
+    }
+
+    @Override
+    public List<CuentaDetalleDTO> findByUsuarioId(Long usuarioId) {
+        List<Cuenta> cuentas = cuentaRepository.findByUsuarioId(usuarioId);
+
+        return cuentaMapper.toDetalleDTOList(cuentas);
     }
 }

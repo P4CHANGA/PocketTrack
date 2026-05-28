@@ -1,6 +1,5 @@
 package com.backend.pocketTrack.entity;
 
-import com.backend.pocketTrack.enums.TipoGasto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,10 +20,6 @@ public class Gastos {
 
     @Column(name = "cantidad", nullable = false)
     private Double cantidad;
-
-    @Column(name = "tipo_gasto", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TipoGasto tipoGasto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id")

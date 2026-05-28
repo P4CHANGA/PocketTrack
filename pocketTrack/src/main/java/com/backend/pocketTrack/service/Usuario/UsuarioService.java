@@ -19,8 +19,6 @@ import java.util.List;
 public class UsuarioService implements IUsuarioService {
 
     private final IUsuarioRepository userRepository;
-    private  final IGastosRepository gastosRepository;
-    private final ICuentaRepository cuentaRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,4 +33,13 @@ public class UsuarioService implements IUsuarioService {
     }
 
 
+    @Override
+    public Long findIdByUsername(String username) {
+        Long id = userRepository.findIdByUsername(username);
+
+        if (id == null) {
+            throw new NotFoundEntityException("Usuario con username: " + username + " no encontrado");
+        }
+        return id;
+    }
 }

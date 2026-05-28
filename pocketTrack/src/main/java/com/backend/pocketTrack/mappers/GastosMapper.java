@@ -2,7 +2,6 @@ package com.backend.pocketTrack.mappers;
 
 import com.backend.pocketTrack.dto.gastos.CreateGastoDTO;
 import com.backend.pocketTrack.dto.gastos.GastoDTO;
-import com.backend.pocketTrack.dto.gastos.GastoDetalleDTO;
 import com.backend.pocketTrack.entity.Gastos;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -20,5 +19,7 @@ public interface GastosMapper {
 
     List<GastoDTO> toDTOList(List<Gastos> gastos);
     List<Gastos> toEntityList(List<GastoDTO> gastoDTO);
+
+
 
 }

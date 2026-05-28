@@ -1,9 +1,7 @@
 package com.backend.pocketTrack.service.Gastos;
 
-import com.backend.pocketTrack.dto.gastos.CreateGastoDTO;
 import com.backend.pocketTrack.dto.gastos.GastoDTO;
 import com.backend.pocketTrack.entity.Gastos;
-import com.backend.pocketTrack.enums.TipoGasto;
 import com.backend.pocketTrack.exceptions.CreateEntityException;
 import com.backend.pocketTrack.exceptions.ErrorGenericoException;
 import com.backend.pocketTrack.mappers.GastosMapper;
@@ -25,7 +23,7 @@ public class GastosService implements IGastosService {
     private final Logger logger = LoggerFactory.getLogger(GastosService.class);
 
     @Override
-    public GastoDTO crearGastos(String nombre, Double cantidad, TipoGasto tipoGasto, Long cuentaId) {
+    public GastoDTO crearGastos(String nombre, Double cantidad, Long cuentaId) {
 
         Gastos gasto = null;
         try {
@@ -36,7 +34,6 @@ public class GastosService implements IGastosService {
 
                 gasto.setNombre(nombre);
                 gasto.setCantidad(cantidad);
-                gasto.setTipoGasto(tipoGasto);
                 gasto.setCuenta(cuentaRepository.findById(cuentaId).orElseThrow(() -> new RuntimeException("No existe la cuenta con el id: " + cuentaId)));
 
                 gastosRepository.save(gasto);
@@ -59,9 +56,11 @@ public class GastosService implements IGastosService {
     }
 
     @Override
-    public List<GastoDTO> obtenerGastosPorCenta(Long cuentaId) {
-        List<GastoDTO> gastos = gastosRepository.findByCuentaId(cuentaId);
-        return gastos;
+    public List<GastoDTO> obtenerGastosPorCuenta(Long cuentaId) {
+
+        List<Gastos> gastos = gastosRepository.findByCuentaId(cuentaId);
+
+        return gastosMapper.toDTOList(gastos);
     }
 
 }

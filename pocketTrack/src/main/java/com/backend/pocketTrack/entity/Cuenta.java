@@ -27,7 +27,7 @@ public class Cuenta {
     @Column(nullable = false)
     private Double cantidad;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false,unique = true)
     private String nombre;
 
     @JsonIgnore

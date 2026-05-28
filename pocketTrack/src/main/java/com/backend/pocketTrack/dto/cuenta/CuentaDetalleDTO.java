@@ -13,7 +13,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class CuentaDetalleDTO implements Serializable {
-    private long id;
     private Moneda divisa;
     private Double cantidad;
     private String nombre;

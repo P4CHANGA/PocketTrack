@@ -23,6 +23,5 @@ public interface IGastosRepository extends CrudRepository<Gastos,Long> {
             "select c.id from Cuenta c where c.usuario.id = :usuarioId)")
     void eliminarporUsuarioId(@Param("usuarioId") Long usuarioId);
 
-    @Query("select g from Gastos g where g.cuenta.id =: cuentaId")
-    List<GastoDTO> findByCuentaId(@Param("cuentaId") Long cuentaId);
+    List<Gastos> findByCuentaId(@Param("cuentaId") Long cuentaId);
 }

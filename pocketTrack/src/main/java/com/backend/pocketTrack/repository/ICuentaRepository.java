@@ -27,4 +27,10 @@ public interface ICuentaRepository extends CrudRepository<Cuenta,Long> {
     @Query("delete from Cuenta c " +
             "where c.usuario.id =:usuarioId")
     void eliminarPorUsuarioId(@Param("usuarioId") Long usuarioId);
+
+    @Query("select c.id from Cuenta c where c.nombre =:nombre")
+    Long findIdByNombre(@Param("nombre") String nombre);
+
+
+    List<Cuenta> findByUsuarioId(@Param("usuarioId") Long usuarioId);
 }

@@ -4,4 +4,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface IUsuarioService extends UserDetailsService {
 
+   Long findIdByUsername(String username);
 }
