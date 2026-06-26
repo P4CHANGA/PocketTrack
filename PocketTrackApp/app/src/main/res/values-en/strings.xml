@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="welcome">Welcome to PocketTrack</string>
+    <string name="sign_up">Sign up</string>
+    <string name="moneda">Currency (EUR,USD,GBP,JPY,CAD,AUD,CHF,CNY,MXN,ARS,BRL,RUB,SEK)</string>
+    <string name="crear_cuenta">Create Banck Account</string>
+    <string name="cantidad">Quantity</string>
+    <string name="crear_gasto">Create Bill</string>
+    <string name="gasto_nombre">Item name</string>
+    <string name="cuenta_nombre">Account name</string>
+    <string name="info">PocketTrack is a personal expense management app where users can create accounts and record expenses. Created by Iván García Alarcón</string>
+    <string name="preferencias">Preferences</string>
+
+</resources>

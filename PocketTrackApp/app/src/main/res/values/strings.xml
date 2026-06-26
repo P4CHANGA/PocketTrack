@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sign_in">Iniciar Sesion</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="welcome">Bienvenido a PocketTrack</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="moneda">Moneda (EUR,USD,GBP,JPY,CAD,AUD,CHF,CNY,MXN,ARS,BRL,RUB,SEK)</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="crear_gasto">Crear Gasto</string>
+    <string name="gasto_nombre">Nombre del gasto</string>
+    <string name="cuenta_nombre">Nombre de la cuenta</string>
+    <string name="info">PocketTrack es una aplicación de gestión personal de gastos donde los usuarios pueden crear cuentas y gastos.Creado por Iván García Alarcón</string>
+    <string name="preferencias">Preferencias</string>
+
+</resources>
