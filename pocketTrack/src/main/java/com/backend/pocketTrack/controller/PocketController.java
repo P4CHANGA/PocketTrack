@@ -40,7 +40,6 @@ public class PocketController {
     private final ICuentaService cuentaService;
     private final IGastosService gastosService;
     private final IUsuarioService usuarioService;
-    private final IGastosRepository igastosRepository;
 
     @Operation(summary = "Crear una Cuenta")
     @ApiResponses(value = {
@@ -58,7 +57,7 @@ public class PocketController {
         return ResponseEntity.ok(cuentaDto);
     }
 
-    @PostMapping("/pocket/crearGasto/{nombre}/{cantidad}/{tipoGasto}/{cuentaId}")
+    @PostMapping("/pocket/crearGasto/{nombre}/{cantidad}/{cuentaId}")
     public ResponseEntity<GastoDTO> crearGasto(@PathVariable String nombre, @PathVariable Double cantidad, @PathVariable Long cuentaId) {
         GastoDTO gastoDTO = null;
             gastoDTO = gastosService.crearGastos(nombre, cantidad, cuentaId);
